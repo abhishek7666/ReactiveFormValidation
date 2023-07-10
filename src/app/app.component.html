@@ -1,0 +1,142 @@
+<div class="container">
+
+  <h1 class="">Angular Reactive Form With Validation</h1>
+
+  <form [formGroup]="registrationForm" (ngSubmit)="onSubmit()">
+
+    <div>
+      <label for="salutation">Salutation:</label>
+      <select id="salutation" formControlName="salutation">
+        <option value="" disabled selected>Select Salutation</option>
+        <option *ngFor="let salutation of salutations" [value]="salutation">{{ salutation }}</option>
+      </select>
+      <div *ngIf="registrationForm.get('salutation')?.invalid && registrationForm.get('salutation')?.touched">
+        Salutation is required.
+      </div>
+    </div>
+
+    <div>
+      <label for="firstName">First Name:</label>
+      <input type="text" id="firstName" formControlName="firstName">
+      <div *ngIf="registrationForm.get('firstName')?.invalid && registrationForm.get('firstName')?.touched">
+        <div *ngIf="registrationForm.get('firstName')?.errors?.['required']">First Name is required.</div>
+        <div *ngIf="registrationForm.get('firstName')?.errors?.['minlength']">
+          First Name should have a minimum of 2 characters.
+        </div>
+      </div>
+    </div>
+
+    <div>
+      <label for="middleName">Middle Name:</label>
+      <input type="text" id="middleName" formControlName="middleName">
+    </div>
+
+    <div>
+      <label for="lastName">Last Name:</label>
+      <input type="text" id="lastName" formControlName="lastName">
+      <div *ngIf="registrationForm.get('lastName')?.invalid && registrationForm.get('lastName')?.touched">
+        <div *ngIf="registrationForm.get('lastName')?.errors?.['required']">Last Name is required.</div>
+        <div *ngIf="registrationForm.get('lastName')?.errors?.['minlength']">
+          Last Name should have a minimum of 2 characters.
+        </div>
+      </div>
+    </div>
+
+    <div>
+      <label for="email">Email:</label>
+      <input type="email" id="email" formControlName="email">
+      <div *ngIf="registrationForm.get('email')?.invalid && registrationForm.get('email')?.touched">
+        <div *ngIf="registrationForm.get('email')?.errors?.['required']">Email is required.</div>
+        <div *ngIf="registrationForm.get('email')?.errors?.['email']">Invalid email format.</div>
+      </div>
+    </div>
+
+    <div>
+      <label for="mobileNumber">Mobile Number:</label>
+      <input type="text" id="mobileNumber" formControlName="mobileNumber">
+      <div *ngIf="registrationForm.get('mobileNumber')?.invalid && registrationForm.get('mobileNumber')?.touched">
+        <div *ngIf="registrationForm.get('mobileNumber')?.errors?.['required']">Mobile Number is required.</div>
+        <div *ngIf="registrationForm.get('mobileNumber')?.errors?.['pattern']">
+          Mobile Number should be a 10-digit number.
+        </div>
+      </div>
+    </div>
+
+    <div>
+      <label for="gender">Gender:</label>
+      <select id="gender" formControlName="gender">
+        <option value="" disabled selected>Select Gender</option>
+        <option value="male">Male</option>
+        <option value="female">Female</option>
+        <option value="other">Other</option>
+      </select>
+      <div *ngIf="registrationForm.get('gender')?.invalid && registrationForm.get('gender')?.touched">
+        Gender is required.
+      </div>
+    </div>
+
+    <div>
+      <label for="adharCardNumber">Aadhaar Card Number:</label>
+      <input type="text" id="adharCardNumber" formControlName="adharCardNumber">
+      <div *ngIf="registrationForm.get('adharCardNumber')?.invalid && registrationForm.get('adharCardNumber')?.touched">
+        <div *ngIf="registrationForm.get('adharCardNumber')?.errors?.['required']">Aadhaar Card Number is required.
+        </div>
+        <div *ngIf="registrationForm.get('adharCardNumber')?.errors?.['pattern']">
+          Aadhaar Card Number should be a 12-digit number.
+        </div>
+      </div>
+    </div>
+
+      <!-- Existing fields -->
+
+      <div formGroupName="address">
+        <div>
+          <label for="city">City:</label>
+          <input type="text" id="city" formControlName="city">
+          <div *ngIf="registrationForm.get('address.city')?.invalid && registrationForm.get('address.city')?.touched">
+            <div *ngIf="registrationForm.get('address.city')?.errors?.['required']">City is required.</div>
+          </div>
+        </div>
+
+        <div>
+          <label for="pincode">Pincode:</label>
+          <input type="text" id="pincode" formControlName="pincode">
+          <div
+            *ngIf="registrationForm.get('address.pincode')?.invalid && registrationForm.get('address.pincode')?.touched">
+            <div *ngIf="registrationForm.get('address.pincode')?.errors?.['required']">Pincode is required.</div>
+            <div *ngIf="registrationForm.get('address.pincode')?.errors?.['pattern']">
+              Pincode should be a 6-digit number.
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <label for="landmark">Landmark:</label>
+          <input type="text" id="landmark" formControlName="landmark">
+        </div>
+
+        <div>
+          <label for="state">State:</label>
+          <input type="text" id="state" formControlName="state">
+          <div *ngIf="registrationForm.get('address.state')?.invalid && registrationForm.get('address.state')?.touched">
+            <div *ngIf="registrationForm.get('address.state')?.errors?.['required']">State is required.</div>
+          </div>
+        </div>
+
+        <div>
+          <label for="country">Country:</label>
+          <input type="text" id="country" formControlName="country">
+          <div
+            *ngIf="registrationForm.get('address.country')?.invalid && registrationForm.get('address.country')?.touched">
+            <div *ngIf="registrationForm.get('address.country')?.errors?.['required']">Country is required.</div>
+          </div>
+        </div>
+      </div>
+
+      <button type="submit" [disabled]="registrationForm.invalid">Submit</button>
+
+  </form>
+  <div *ngIf="showSuccessMessage" class="alert alert-success">
+    Registration successful!
+  </div>
+</div>
